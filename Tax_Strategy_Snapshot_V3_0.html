@@ -1,0 +1,1730 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Tax Strategy Snapshot™ — Golden Tree Wealth Partners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+:root{
+  --bg:#07100e;
+  --bg2:#0c1a16;
+  --panel:#0f1f1b;
+  --panel2:#142720;
+  --text:#eef2ee;
+  --muted:rgba(238,242,238,.55);
+  --soft:rgba(255,255,255,.07);
+  --gold:#b8975a;
+  --gold2:#d9bc82;
+  --gold3:#f0dfa8;
+  --green:#1c7a5a;
+  --green2:#25a878;
+  --line:rgba(184,151,90,.22);
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',system-ui,sans-serif;
+  font-weight:400;
+  line-height:1.5;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.6;
+}
+
+/* ── BACKGROUND GRADIENT ── */
+.bg-glow{
+  position:fixed;top:-20%;left:50%;transform:translateX(-50%);
+  width:900px;height:600px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(37,168,120,.12) 0%,rgba(184,151,90,.06) 40%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── LAYOUT ── */
+.page{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:48px 24px 80px}
+
+/* ── HEADER ── */
+.header{text-align:center;margin-bottom:52px}
+.brand-mark{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:28px;
+  padding:10px 18px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(184,151,90,.08);
+}
+.mark-diamond{
+  width:14px;height:14px;
+  background:linear-gradient(135deg,var(--gold),#7a5e28);
+  transform:rotate(45deg);
+  border-radius:3px;
+  flex:none;
+}
+.brand-name{
+  font-family:'DM Sans',sans-serif;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold2);font-weight:600;
+}
+.header h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,5.6vw,56px);
+  font-weight:600;line-height:1.08;
+  letter-spacing:-.01em;
+  margin-bottom:16px;
+}
+.header h1 em{font-style:italic;color:var(--gold2)}
+.header p{
+  font-size:17px;color:var(--muted);
+  max-width:540px;margin:0 auto;line-height:1.6;
+}
+.header-divider{
+  width:48px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:28px auto 0;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap{margin-bottom:40px}
+.progress-steps{
+  display:flex;justify-content:center;gap:8px;
+  margin-bottom:12px;
+}
+.step-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  transition:.3s background,.3s transform;
+}
+.step-dot.done{background:var(--gold2)}
+.step-dot.active{background:var(--gold3);transform:scale(1.4)}
+.progress-label{
+  text-align:center;font-size:12px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);
+}
+.progress-bar-track{
+  height:2px;background:rgba(255,255,255,.07);
+  border-radius:999px;margin-top:14px;overflow:hidden;
+}
+.progress-bar-fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--green2),var(--gold2));
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── STEP PANEL ── */
+.step{display:none;animation:fadeUp .45s ease both}
+.step.active{display:block}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.step-eyebrow{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold2);margin-bottom:14px;font-weight:600;
+}
+.step-question{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(26px,4vw,36px);
+  font-weight:600;line-height:1.15;
+  margin-bottom:10px;
+}
+.step-hint{font-size:14px;color:var(--muted);margin-bottom:32px}
+
+/* ── CHOICE GRID ── */
+.choices{display:flex;flex-direction:column;gap:10px}
+.choices.two-col{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+@media(max-width:520px){.choices.two-col{grid-template-columns:1fr}}
+
+.choice-btn{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:var(--radius);
+  background:rgba(255,255,255,.03);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;font-weight:400;
+  cursor:pointer;
+  text-align:left;
+  transition:.2s border-color,.2s background,.15s transform;
+  position:relative;overflow:hidden;
+}
+.choice-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(184,151,90,.06),transparent);
+  opacity:0;transition:.2s opacity;
+}
+.choice-btn:hover{
+  border-color:rgba(184,151,90,.4);
+  transform:translateY(-1px);
+}
+.choice-btn:hover::before{opacity:1}
+.choice-btn.selected{
+  border-color:var(--gold);
+  background:rgba(184,151,90,.12);
+}
+.choice-btn.selected::before{opacity:1}
+.choice-icon{
+  width:32px;height:32px;border-radius:10px;
+  background:rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex:none;
+}
+.choice-btn.selected .choice-icon{
+  background:rgba(184,151,90,.18);
+}
+.choice-check{
+  margin-left:auto;
+  width:20px;height:20px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  flex:none;transition:.2s;
+}
+.choice-btn.selected .choice-check{
+  background:var(--gold);border-color:var(--gold);
+}
+.check-mark{opacity:0;font-size:11px;color:#07100e;font-weight:800;transition:.15s opacity}
+.choice-btn.selected .check-mark{opacity:1}
+
+/* multi-select support */
+.choice-btn.multi{cursor:pointer}
+
+/* ── SLIDER ── */
+.slider-block{margin-bottom:24px}
+.slider-label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:10px;
+}
+.slider-label span{font-size:14px;color:var(--muted)}
+.slider-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:600;color:var(--gold2);
+  min-width:44px;text-align:right;line-height:1;
+}
+.slider-track{position:relative;height:46px;display:flex;align-items:center}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:4px;border-radius:999px;
+  background:rgba(255,255,255,.10);outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:22px;height:22px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  border:2px solid var(--bg);
+  box-shadow:0 0 0 3px rgba(184,151,90,.25),0 4px 12px rgba(0,0,0,.4);
+  cursor:pointer;transition:.15s transform;
+}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.slider-poles{
+  display:flex;justify-content:space-between;
+  font-size:11px;color:var(--muted);margin-top:4px;
+  letter-spacing:.05em;
+}
+
+/* ── NAVIGATION ── */
+.nav{display:flex;gap:12px;margin-top:36px;align-items:center}
+.btn-next{
+  flex:1;padding:16px 28px;
+  border:none;border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--gold),#8c6f1e);
+  color:#07100e;font-family:'DM Sans',sans-serif;
+  font-size:16px;font-weight:600;cursor:pointer;
+  transition:.2s opacity,.15s transform;letter-spacing:.01em;
+}
+.btn-next:hover{opacity:.9;transform:translateY(-1px)}
+.btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.btn-back{
+  padding:16px 20px;border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.12);
+  background:transparent;color:var(--muted);
+  font-family:'DM Sans',sans-serif;font-size:15px;cursor:pointer;
+  transition:.2s color,.2s border-color;
+}
+.btn-back:hover{color:var(--text);border-color:rgba(255,255,255,.25)}
+
+/* ── RESULTS ── */
+#step-results{display:none}
+#step-results.active{display:block}
+
+.results-header{text-align:center;margin-bottom:40px}
+.results-header .eyebrow{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold2);margin-bottom:16px;font-weight:600;
+}
+.results-header h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(30px,5vw,46px);font-weight:600;
+  line-height:1.1;margin-bottom:10px;
+}
+.results-header p{font-size:15px;color:var(--muted);max-width:500px;margin:0 auto}
+
+.score-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+  margin-bottom:28px;
+}
+@media(max-width:520px){.score-grid{grid-template-columns:1fr}}
+
+.score-card{
+  background:linear-gradient(160deg,var(--panel2),var(--panel));
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);
+  padding:22px 20px;position:relative;overflow:hidden;
+}
+.score-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  opacity:.6;
+}
+.score-card.full{grid-column:1/-1}
+.score-card.hero{
+  background:linear-gradient(160deg,rgba(184,151,90,.12),var(--panel));
+  padding:26px 24px;
+}
+.score-card.hero .score-num{font-size:64px}
+.score-label{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;
+}
+.score-card.hero .score-label{color:var(--gold2)}
+.score-num-row{display:flex;align-items:baseline;gap:6px;margin-bottom:14px}
+.score-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;font-weight:700;line-height:1;
+  color:var(--gold2);
+}
+.score-denom{font-size:18px;color:var(--muted)}
+.score-bar{height:4px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:10px}
+.score-bar-fill{height:100%;border-radius:999px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.score-bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.score-bar-fill.green{background:linear-gradient(90deg,#1a5e46,var(--green2))}
+.score-bar-fill.amber{background:linear-gradient(90deg,#7a4b0d,#f0a030)}
+.score-bar-fill.red{background:linear-gradient(90deg,#6b1010,#e84040)}
+.score-badge{
+  display:inline-block;padding:4px 10px;border-radius:999px;
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+}
+.badge-strong{background:rgba(37,168,120,.18);color:var(--green2)}
+.badge-moderate{background:rgba(184,151,90,.18);color:var(--gold2)}
+.badge-high{background:rgba(200,60,60,.18);color:#e88080}
+.score-caption{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5}
+
+.opportunity-panel{
+  background:linear-gradient(160deg,rgba(37,168,120,.08),rgba(184,151,90,.05));
+  border:1px solid rgba(37,168,120,.2);
+  border-radius:var(--radius);padding:24px;margin-bottom:24px;
+}
+.opportunity-panel h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:600;margin-bottom:6px;
+  color:var(--gold2);
+}
+.opportunity-panel .panel-sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.opportunity-list{display:flex;flex-direction:column;gap:10px}
+.opp-item{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:12px 14px;border-radius:14px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+}
+.opp-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold2);margin-top:7px;flex:none;
+}
+.opp-text{font-size:14px;line-height:1.5}
+.opp-text strong{color:var(--gold3);font-weight:600}
+.opp-range{
+  display:inline-block;margin-top:6px;
+  font-size:12px;font-weight:600;color:var(--gold2);
+  background:rgba(184,151,90,.12);
+  border:1px solid rgba(184,151,90,.28);
+  padding:2px 9px;border-radius:999px;white-space:nowrap;
+}
+.opp-note{
+  font-size:11.5px;color:rgba(238,242,238,.5);line-height:1.55;
+  margin-top:14px;
+}
+.opp-note strong{color:rgba(238,242,238,.7);font-weight:600}
+
+.insight-strip{
+  display:flex;gap:10px;padding:16px 18px;
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  margin-bottom:10px;align-items:flex-start;
+}
+.insight-icon{font-size:18px;flex:none;margin-top:1px}
+.insight-body{font-size:14px;color:var(--muted);line-height:1.5}
+.insight-body strong{color:var(--text);font-weight:500}
+
+/* ── CTA ── */
+.cta-block{
+  text-align:center;
+  margin-top:36px;
+  padding:40px 28px;
+  background:linear-gradient(160deg,var(--panel2),var(--panel));
+  border:1px solid var(--line);border-radius:24px;
+  position:relative;overflow:hidden;
+}
+.cta-block::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(184,151,90,.1),transparent 65%);
+}
+.cta-block h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(26px,4vw,38px);font-weight:600;
+  line-height:1.15;margin-bottom:12px;position:relative;
+}
+.cta-block h3 em{font-style:italic;color:var(--gold2)}
+.cta-block p{
+  font-size:15px;color:var(--muted);
+  max-width:460px;margin:0 auto 28px;position:relative;line-height:1.6;
+}
+.btn-cta{
+  display:inline-block;padding:18px 44px;
+  border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--gold),#7a5e28);
+  color:#06100e;font-family:'DM Sans',sans-serif;
+  font-size:16px;font-weight:700;cursor:pointer;
+  text-decoration:none;border:none;
+  box-shadow:0 8px 32px rgba(184,151,90,.3);
+  transition:.2s opacity,.2s transform;position:relative;
+}
+.btn-cta:hover{opacity:.92;transform:translateY(-2px)}
+.cta-subtext{
+  margin-top:14px;font-size:13px;color:var(--muted);position:relative;
+}
+
+/* ── FOOTER ── */
+.footer{
+  text-align:center;margin-top:48px;
+  font-size:12px;color:rgba(238,242,238,.3);
+  letter-spacing:.04em;
+}
+.footer a{color:var(--gold);text-decoration:none}
+
+/* ── CONTACT FIELDS ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+@media(max-width:520px){.contact-grid{grid-template-columns:1fr}}
+.field-wrap{display:flex;flex-direction:column;gap:7px}
+.field-wrap.full{grid-column:1/-1}
+.field-wrap label{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.field-wrap input,.field-wrap select{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:15px;
+  outline:none;transition:.2s border-color;
+}
+.field-wrap input:focus,.field-wrap select:focus{
+  border-color:rgba(184,151,90,.5);
+  box-shadow:0 0 0 3px rgba(184,151,90,.1);
+}
+.field-wrap select option{background:#0f1f1b;color:var(--text)}
+
+/* ── OPENING STATEMENT ── */
+.opening-statement{
+  max-width:620px;margin:0 auto 44px;
+  padding:26px 30px;
+  border:1px solid var(--line);
+  border-left:2px solid var(--gold);
+  border-radius:16px;
+  background:linear-gradient(160deg,rgba(184,151,90,.06),rgba(37,168,120,.03));
+  position:relative;z-index:1;
+}
+.opening-statement p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(18px,2.4vw,21px);
+  line-height:1.5;color:var(--text);
+}
+.opening-statement p + p{margin-top:12px}
+.opening-statement .lede{color:var(--gold2)}
+.opening-statement .kicker{
+  font-family:'DM Sans',sans-serif;
+  font-size:13px;color:var(--muted);
+  margin-top:16px;line-height:1.55;
+}
+
+/* ── SUB-BLOCK HEADING INSIDE A STEP ── */
+.sub-block{margin-bottom:30px}
+.sub-block:last-of-type{margin-bottom:0}
+.sub-label{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold2);margin-bottom:14px;font-weight:600;
+}
+
+/* ── FRAMING / SEED PANELS ON RESULTS ── */
+.framing-panel{
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:26px 28px;margin-bottom:24px;
+  background:linear-gradient(160deg,var(--panel2),var(--panel));
+  position:relative;overflow:hidden;
+}
+.framing-panel::after{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--gold),var(--gold2));
+}
+.framing-panel .lead{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(20px,3vw,26px);line-height:1.32;
+  color:var(--gold3);margin-bottom:14px;
+}
+.framing-panel .body{font-size:15px;color:var(--muted);line-height:1.6}
+
+.framing-panel.seed{
+  background:linear-gradient(160deg,rgba(37,168,120,.10),var(--panel));
+  border-color:rgba(37,168,120,.22);
+}
+.framing-panel.seed::after{background:linear-gradient(180deg,var(--green2),var(--gold2))}
+.framing-panel.seed .seed-eyebrow{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--green2);font-weight:600;margin-bottom:12px;
+}
+.framing-panel.seed .lead{color:var(--text)}
+.framing-panel.seed .lead em{font-style:italic;color:var(--gold2)}
+
+/* ── METHODOLOGY (results) ── */
+.methodology{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius);
+  background:rgba(255,255,255,.02);
+  margin-bottom:24px;overflow:hidden;
+}
+.methodology summary{
+  cursor:pointer;list-style:none;
+  padding:18px 22px;font-size:12px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.methodology summary::-webkit-details-marker{display:none}
+.methodology summary::after{content:'+';font-size:20px;color:var(--muted);line-height:1}
+.methodology[open] summary::after{content:'\2013'}
+.methodology summary:hover{color:var(--gold3)}
+.methodology-body{padding:4px 22px 24px}
+.methodology-body .mb-intro{font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 20px}
+.method-score{padding:16px 0;border-top:1px solid rgba(255,255,255,.06)}
+.method-score h4{
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
+  color:var(--text);margin-bottom:5px;
+}
+.method-score p{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:8px}
+.method-score .weights{font-size:12px;color:rgba(238,242,238,.5);line-height:1.7}
+.method-score .weights b{color:rgba(238,242,238,.72);font-weight:600}
+.method-score .bands{
+  font-size:11px;color:var(--gold2);margin-top:8px;letter-spacing:.03em;
+}
+
+/* ── DISCLOSURES ── */
+.disclosures{
+  margin-top:56px;padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.disc-title{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;font-weight:600;
+}
+.disclosures p{
+  font-size:11.5px;line-height:1.65;
+  color:rgba(238,242,238,.42);margin-bottom:10px;
+}
+.disclosures p strong{color:rgba(238,242,238,.62);font-weight:600}
+.disclosures a{color:var(--gold);text-decoration:none}
+.disc-firm{
+  margin-top:14px !important;padding:12px 14px;border-radius:10px;
+  border:1px dashed rgba(184,151,90,.45);
+  background:rgba(184,151,90,.05);
+  color:rgba(238,242,238,.58) !important;
+}
+
+/* ── INLINE DISCLAIMERS ── */
+.cta-disclaimer{
+  margin:16px auto 0;max-width:470px;
+  font-size:11.5px;color:rgba(238,242,238,.4);
+  position:relative;line-height:1.55;
+}
+.opening-disclaimer{
+  font-family:'DM Sans',sans-serif;
+  margin-top:12px;font-size:12px;color:rgba(238,242,238,.4);line-height:1.5;
+}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand-mark">
+      <div class="mark-diamond"></div>
+      <span class="brand-name">Golden Tree Wealth Partners</span>
+    </div>
+    <h1>Is Your CPA <em>Planning</em> Your Taxes —<br>or Just <em>Filing</em> Them?</h1>
+    <p>A 2-minute snapshot for high earners and business owners. See whether your current tax relationship is built on compliance — or strategy.</p>
+    <div class="header-divider"></div>
+  </header>
+
+  <!-- OPENING STATEMENT -->
+  <div class="opening-statement">
+    <p class="lede">Most CPAs are excellent at one thing: filing an accurate return, on time.</p>
+    <p>But filing is history — it records what already happened. Tax <em>planning</em> is the proactive work of legally lowering what you owe <em>before</em> the year closes. Many high earners never get it, and never realize what it's costing them.</p>
+    <p class="kicker">This 2-minute snapshot reveals whether there's a gap between the taxes you pay and the taxes you could be paying.</p>
+    <p class="opening-disclaimer">Educational tool only — not tax, legal, or financial advice. Scores are based on your answers, not a review of your returns. Full disclosures appear at the bottom of this page.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-steps">
+      <div class="step-dot active" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+      <div class="step-dot" id="dot-3"></div>
+      <div class="step-dot" id="dot-4"></div>
+      <div class="step-dot" id="dot-5"></div>
+    </div>
+    <div class="progress-label" id="progress-label">Step 1 of 5 — Identity</div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-bar" style="width:10%"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ STEP 1: IDENTITY ══════════════ -->
+  <div class="step active" id="step-1">
+    <div class="step-eyebrow">Step 1 — Identity</div>
+    <div class="step-question">Which best describes you?</div>
+    <div class="step-hint">Choose the one that fits most closely.</div>
+    <div class="choices" id="identity-choices">
+      <button class="choice-btn" data-value="business_owner">
+        <span class="choice-icon">🏢</span>
+        <span>Business owner (S-corp, LLC, partnership)</span>
+        <span class="choice-check"><span class="check-mark">✓</span></span>
+      </button>
+      <button class="choice-btn" data-value="professional">
+        <span class="choice-icon">💼</span>
+        <span>High-income professional or W-2 executive</span>
+        <span class="choice-check"><span class="check-mark">✓</span></span>
+      </button>
+      <button class="choice-btn" data-value="real_estate">
+        <span class="choice-icon">🏘️</span>
+        <span>Real estate investor / landlord</span>
+        <span class="choice-check"><span class="check-mark">✓</span></span>
+      </button>
+      <button class="choice-btn" data-value="self_employed">
+        <span class="choice-icon">🧑‍💻</span>
+        <span>Self-employed / 1099 / consultant</span>
+        <span class="choice-check"><span class="check-mark">✓</span></span>
+      </button>
+      <button class="choice-btn" data-value="multi_income">
+        <span class="choice-icon">🔗</span>
+        <span>Multiple income sources (business + investments + RE)</span>
+        <span class="choice-check"><span class="check-mark">✓</span></span>
+      </button>
+      <button class="choice-btn" data-value="equity_comp">
+        <span class="choice-icon">📑</span>
+        <span>Equity / stock compensation (RSUs, options, an exit)</span>
+        <span class="choice-check"><span class="check-mark">✓</span></span>
+      </button>
+    </div>
+    <div class="nav">
+      <button class="btn-next" id="next-1" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ STEP 2: YOUR TAX RELATIONSHIP ══════════════ -->
+  <div class="step" id="step-2">
+    <div class="step-eyebrow">Step 2 — Your Tax Relationship</div>
+    <div class="step-question">How does your current tax preparer actually work?</div>
+    <div class="step-hint">Be honest — this is where the gap usually hides.</div>
+
+    <div class="sub-block">
+      <div class="sub-label">How often do you hear from them?</div>
+      <div class="choices" id="cpacontact-choices">
+        <button class="choice-btn" data-value="tax_time">
+          <span class="choice-icon">📅</span>
+          <span>Basically only at tax time</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="few_times">
+          <span class="choice-icon">📞</span>
+          <span>A few touchpoints during the year</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="year_round">
+          <span class="choice-icon">🧭</span>
+          <span>Year-round, proactive planning</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sub-block">
+      <div class="sub-label">Have they brought you a strategy first?</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:14px">In the last 2 years, have they <em>proactively</em> presented a tax-saving strategy you weren't already using?</div>
+      <div class="choices" id="proactive-choices">
+        <button class="choice-btn" data-value="never">
+          <span class="choice-icon">📥</span>
+          <span>No — they prepare what I hand them</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="once_twice">
+          <span class="choice-icon">💡</span>
+          <span>Once or twice</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="multiple">
+          <span class="choice-icon">🌟</span>
+          <span>Yes, regularly</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sub-block">
+      <div class="sub-label">When your return is done, it feels like…</div>
+      <div class="choices" id="filing-choices">
+        <button class="choice-btn" data-value="recording">
+          <span class="choice-icon">🗂️</span>
+          <span>Recording what already happened</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="mixed">
+          <span class="choice-icon">⚖️</span>
+          <span>A mix of both</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="reducing">
+          <span class="choice-icon">📉</span>
+          <span>Actively reducing what I owe</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sub-block">
+      <div class="sub-label">Strategies they've walked you through</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:14px">Which of these has your tax advisor ever proactively brought to <em>you</em>? Select all that apply.</div>
+      <div class="choices two-col" id="strategies-choices">
+        <button class="choice-btn multi" data-value="entity"><span>Entity structure / S-corp salary</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="retirement"><span>Advanced retirement plans (SEP, solo 401k, cash balance)</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="income_timing"><span>Timing or deferring income</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="depreciation"><span>Real estate depreciation / cost segregation</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="family"><span>Employing family / paying your kids</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="qbi"><span>QBI / pass-through deduction</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="augusta"><span>Augusta Rule (renting your home to your business)</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="section_125"><span>Section 125 cafeteria / pre-tax benefit plan</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="dual_entity"><span>Dual-entity / management company structure</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="investments"><span>Tax-advantaged investments (Opp. Zones, etc.)</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="charitable"><span>Charitable / donor-advised fund strategies</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:12px">Not every strategy applies to every situation — several require business ownership. Select only the ones your advisor has actually discussed; leave the rest blank.</div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" id="back-2">← Back</button>
+      <button class="btn-next" id="next-2" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ STEP 3: YOUR PICTURE ══════════════ -->
+  <div class="step" id="step-3">
+    <div class="step-eyebrow">Step 3 — Your Picture</div>
+    <div class="step-question">How big is the picture we're working with?</div>
+    <div class="step-hint">No exact figures needed — ranges are fine. This tells us how much is at stake.</div>
+
+    <div class="sub-block">
+      <div class="sub-label">Annual income or business revenue</div>
+      <div class="choices two-col" id="income-choices">
+        <button class="choice-btn" data-value="lt250"><span>Under $250k</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn" data-value="250_750"><span>$250k – $750k</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn" data-value="750_2m"><span>$750k – $2M</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn" data-value="2m_plus"><span>$2M+</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+      </div>
+    </div>
+
+    <div class="sub-block">
+      <div class="sub-label">Which of the following apply?</div>
+      <div class="choices two-col" id="complexity-choices">
+        <button class="choice-btn multi" data-value="business"><span>Own a business</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="multi_llc"><span>Multiple LLCs / entities</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="commercial_re"><span>Commercial real estate</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="rental_re"><span>Rental properties</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="trusts"><span>Trusts / estate plan</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="investors"><span>Outside investors / partners</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="portfolio"><span>Sizable investment portfolio</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+        <button class="choice-btn multi" data-value="liquidity"><span>Equity comp / pending exit</span><span class="choice-check"><span class="check-mark">✓</span></span></button>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:12px">None of these? You can continue without selecting any.</div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" id="back-3">← Back</button>
+      <button class="btn-next" id="next-3" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ STEP 4: SELF-ASSESSMENT ══════════════ -->
+  <div class="step" id="step-4">
+    <div class="step-eyebrow">Step 4 — Self-Assessment</div>
+    <div class="step-question">A few honest questions.</div>
+    <div class="step-hint">This is the part most tax preparers never ask you.</div>
+
+    <div class="slider-block">
+      <div class="slider-label">
+        <span>How confident are you that you're paying the lowest tax legally possible?</span>
+        <div class="slider-val" id="conf-val">4</div>
+      </div>
+      <div class="slider-track">
+        <input type="range" id="conf-slider" min="0" max="10" value="4" step="1"/>
+      </div>
+      <div class="slider-poles"><span>Not at all confident</span><span>Completely confident</span></div>
+    </div>
+
+    <div class="slider-block">
+      <div class="slider-label">
+        <span>How stressful is tax season for you?</span>
+        <div class="slider-val" id="stress-val">5</div>
+      </div>
+      <div class="slider-track">
+        <input type="range" id="stress-slider" min="0" max="10" value="5" step="1"/>
+      </div>
+      <div class="slider-poles"><span>Effortless</span><span>A scramble</span></div>
+    </div>
+
+    <div class="sub-block" style="margin-bottom:28px">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:12px">Which statement feels most accurate?</div>
+      <div class="choices" id="selfdx-choices">
+        <button class="choice-btn" data-value="handled">
+          <span class="choice-icon">🟢</span>
+          <span>My taxes are handled and optimized</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="maybe_overpay">
+          <span class="choice-icon">🟡</span>
+          <span>I might be overpaying, but I'm not sure</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="leaving_money">
+          <span class="choice-icon">🟠</span>
+          <span>I'm fairly sure I'm leaving money on the table</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="outgrown">
+          <span class="choice-icon">🔺</span>
+          <span>I've outgrown my current preparer</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sub-block" style="margin-bottom:28px">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:12px">If nothing changes over the next 3 years, what concerns you most?</div>
+      <div class="choices" id="inaction-choices">
+        <button class="choice-btn" data-value="overpay">
+          <span class="choice-icon">📊</span>
+          <span>Overpaying taxes year after year</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="missing_strategies">
+          <span class="choice-icon">📈</span>
+          <span>Missing strategies as my income grows</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="exit_value">
+          <span class="choice-icon">🏷️</span>
+          <span>No tax plan for a future sale or exit</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="april_scramble">
+          <span class="choice-icon">⏰</span>
+          <span>The annual April scramble continuing</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+        <button class="choice-btn" data-value="family_mess">
+          <span class="choice-icon">👨‍👩‍👧</span>
+          <span>Leaving a tax mess for my family</span>
+          <span class="choice-check"><span class="check-mark">✓</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" id="back-4">← Back</button>
+      <button class="btn-next" id="next-4" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ STEP 5: CONTACT ══════════════ -->
+  <div class="step" id="step-5">
+    <div class="step-eyebrow">Step 5 — Your Snapshot</div>
+    <div class="step-question">Where should we send your results?</div>
+    <div class="step-hint">Your Tax Strategy Snapshot™ is ready. Enter your info to unlock it.</div>
+
+    <div class="contact-grid">
+      <div class="field-wrap">
+        <label>First name *</label>
+        <input id="contact-first" type="text" placeholder="Jane"/>
+      </div>
+      <div class="field-wrap">
+        <label>Last name *</label>
+        <input id="contact-last" type="text" placeholder="Smith"/>
+      </div>
+      <div class="field-wrap full">
+        <label>Email *</label>
+        <input id="contact-email" type="email" placeholder="jane@company.com"/>
+      </div>
+      <div class="field-wrap full">
+        <label>Business name</label>
+        <input id="contact-biz" type="text" placeholder="Acme LLC (optional)"/>
+      </div>
+      <div class="field-wrap full">
+        <label>Who prepares your taxes today?</label>
+        <input id="contact-preparer" type="text" placeholder="CPA firm, software, myself… (optional)"/>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" id="back-5">← Back</button>
+      <button class="btn-next" id="next-5" disabled>See My Snapshot →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ RESULTS ══════════════ -->
+  <div id="step-results">
+    <div class="results-header">
+      <div class="eyebrow">Your Tax Strategy Snapshot™</div>
+      <h2>Here's what your answers reveal,<br><em id="result-name">and what it means.</em></h2>
+      <p>Four read-outs based on how your taxes are handled today — and where strategy may be missing.</p>
+    </div>
+
+    <div class="score-grid">
+      <!-- HERO: TAX PLANNING GAP -->
+      <div class="score-card hero full">
+        <div class="score-label">Tax Planning Gap</div>
+        <div class="score-num-row">
+          <div class="score-num" id="r-gap">—</div>
+          <div class="score-denom">/100</div>
+        </div>
+        <div class="score-bar"><div class="score-bar-fill amber" id="r-gap-bar" style="width:0%"></div></div>
+        <span class="score-badge" id="r-gap-badge">—</span>
+        <div class="score-caption">Higher means a wider gap between what you pay and what proactive planning could save. This is the number to watch.</div>
+      </div>
+
+      <div class="score-card">
+        <div class="score-label">Proactive Advisory</div>
+        <div class="score-num-row">
+          <div class="score-num" id="r-proactive">—</div>
+          <div class="score-denom">/100</div>
+        </div>
+        <div class="score-bar"><div class="score-bar-fill green" id="r-proactive-bar" style="width:0%"></div></div>
+        <span class="score-badge" id="r-proactive-badge">—</span>
+      </div>
+
+      <div class="score-card">
+        <div class="score-label">Structural Efficiency</div>
+        <div class="score-num-row">
+          <div class="score-num" id="r-structural">—</div>
+          <div class="score-denom">/100</div>
+        </div>
+        <div class="score-bar"><div class="score-bar-fill gold" id="r-structural-bar" style="width:0%"></div></div>
+        <span class="score-badge" id="r-structural-badge">—</span>
+      </div>
+
+      <div class="score-card full">
+        <div class="score-label">Opportunity Index — estimated upside available</div>
+        <div class="score-num-row">
+          <div class="score-num" id="r-opportunity">—</div>
+          <div class="score-denom">/100</div>
+        </div>
+        <div class="score-bar"><div class="score-bar-fill gold" id="r-opportunity-bar" style="width:0%"></div></div>
+        <span class="score-badge" id="r-opportunity-badge">—</span>
+        <div class="score-caption">Combines your income level with the size of the planning gap. The higher this runs, the more likely real dollars are being left on the table each year.</div>
+      </div>
+    </div>
+
+    <!-- How scores are calculated -->
+    <details class="methodology">
+      <summary>How your scores are calculated</summary>
+      <div class="methodology-body">
+        <p class="mb-intro">Each score is a weighted blend of your self-reported answers, normalized to a 0–100 scale. The weights below sum to 100% for each score. "Strategy coverage" is measured only against the strategies available to your profile — strategies that require a business are not counted for a W-2 earner with no business. No score reflects a review of your actual tax returns, financial records, or specific circumstances — they are directional indicators only.</p>
+
+        <div class="method-score">
+          <h4>Tax Planning Gap — <span style="color:var(--muted);font-weight:400">distance from proactive planning</span></h4>
+          <p>Estimates how far your current handling sits from a proactive planning approach. Higher means a wider gap.</p>
+          <div class="weights">
+            <b>22%</b> advisor contact cadence &nbsp;·&nbsp; <b>22%</b> proactive-strategy history &nbsp;·&nbsp; <b>20%</b> strategy coverage (of the strategies relevant to your situation) &nbsp;·&nbsp; <b>18%</b> filing orientation &nbsp;·&nbsp; <b>10%</b> confidence you pay the legal minimum &nbsp;·&nbsp; <b>8%</b> self-assessment
+          </div>
+          <div class="bands">Bands: 60+ Significant · 35–59 Moderate · under 35 Minimal</div>
+        </div>
+
+        <div class="method-score">
+          <h4>Proactive Advisory — <span style="color:var(--muted);font-weight:400">how planning-oriented your preparer is</span></h4>
+          <p>Reflects how forward-looking your current tax relationship is, based on how they engage with you.</p>
+          <div class="weights">
+            <b>30%</b> contact cadence &nbsp;·&nbsp; <b>30%</b> proactive-strategy history &nbsp;·&nbsp; <b>20%</b> filing orientation &nbsp;·&nbsp; <b>20%</b> strategy coverage
+          </div>
+          <div class="bands">Bands: 70+ Strong · 45–69 Moderate · under 45 Needs Attention</div>
+        </div>
+
+        <div class="method-score">
+          <h4>Structural Efficiency — <span style="color:var(--muted);font-weight:400">how well your structure fits your complexity</span></h4>
+          <p>Gauges whether your structure appears coordinated relative to how many moving parts you have.</p>
+          <div class="weights">
+            <b>30%</b> coordination quality &nbsp;·&nbsp; <b>25%</b> entity / compensation addressed &nbsp;·&nbsp; <b>15%</b> real-estate depreciation handling &nbsp;·&nbsp; <b>15%</b> complexity load &nbsp;·&nbsp; <b>15%</b> self-assessment
+          </div>
+          <div class="bands">Bands: 70+ Strong · 45–69 Moderate · under 45 Needs Attention</div>
+        </div>
+
+        <div class="method-score">
+          <h4>Opportunity Index — <span style="color:var(--muted);font-weight:400">estimated upside available</span></h4>
+          <p>Combines what's at stake with the size of your planning gap. Higher suggests more potential value to revisit — it is not an estimate of dollars and does not promise savings.</p>
+          <div class="weights">
+            <b>45%</b> income / revenue level &nbsp;·&nbsp; <b>40%</b> your Tax Planning Gap &nbsp;·&nbsp; <b>15%</b> structural complexity
+          </div>
+          <div class="bands">Bands: 65+ High Upside · 45–64 Moderate · under 45 Limited</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Framing statement -->
+    <div class="framing-panel">
+      <div class="lead">Your answers suggest the issue isn't how much you earn — it's that your tax relationship may be built on compliance, not planning.</div>
+      <div class="body">Filing a clean return keeps you legal. It doesn't keep your money. The strategies that actually lower a high earner's tax bill have to be set in motion <em>before</em> the year closes — which only happens when someone is planning ahead, not just preparing in April.</div>
+    </div>
+
+    <div class="opportunity-panel">
+      <h3>Where the Opportunity May Be Hiding</h3>
+      <div class="panel-sub">Based on your answers — these are worth a closer look on a review of your actual returns.</div>
+      <div class="opportunity-list" id="opportunity-list"></div>
+      <div class="opp-note">*Ranges are <strong>illustrative and hypothetical</strong> — general planning scenarios, not a quote, estimate, or guarantee, and <strong>not additive</strong>. Actual results depend entirely on your facts and current law. See disclosures below.</div>
+    </div>
+
+    <div id="insights-list"></div>
+
+    <!-- Capital Architecture seed -->
+    <div class="framing-panel seed">
+      <div class="seed-eyebrow">The Bigger Picture</div>
+      <div class="lead">Tax is the entry point — not the whole picture. The largest savings show up when tax strategy, entity structure, investments, insurance, and estate planning are coordinated as <em>one system</em> instead of separate silos.</div>
+      <div class="body">We call that Capital Architecture. A tax review is simply where it starts — and where most high earners first see how much their disconnected advisors have been leaving uncoordinated.</div>
+    </div>
+
+    <div class="cta-block">
+      <h3>Let's Find What<br>You're <em>Overpaying</em></h3>
+      <p>On a complimentary 30-minute call, I'll personally review your most recent return — and the prior year — to pinpoint specific strategies your current preparer may have missed. No pitch. Just an honest read on whether there's money to recover.</p>
+      <a href="https://calendly.com/goldentreewealthpartners/30min" target="_blank" rel="noopener noreferrer" class="btn-cta">Book My Tax Review →</a>
+      <div class="cta-subtext">Have your last two returns handy. For high earners &amp; business owners. 100% confidential.</div>
+      <div class="cta-disclaimer">No specific tax savings or outcomes are promised or guaranteed; results depend entirely on your individual facts and circumstances. Completing this assessment or scheduling a call does not create a client or advisory relationship.</div>
+    </div>
+
+    <div style="margin-top:28px;text-align:center">
+      <button class="btn-back" id="restart-btn" style="margin:0 auto">← Start Over</button>
+    </div>
+
+    <!-- Email delivery status -->
+    <div id="email-status" style="display:none;margin-top:20px;text-align:center">
+      <div id="email-sending" style="font-size:13px;color:var(--muted)">
+        ✉️ Sending your snapshot to <span id="email-dest"></span>…
+      </div>
+      <div id="email-sent" style="display:none;font-size:13px;color:var(--green2);font-weight:500">
+        ✅ Snapshot sent! Check your inbox (and spam folder just in case).
+      </div>
+      <div id="email-error" style="display:none;font-size:13px;color:#e88080">
+        ⚠️ We couldn't send the email automatically. Please screenshot your results or <a href="mailto:info@goldentreewealthpartners.com" style="color:var(--gold)">contact us directly</a>.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ DISCLOSURES ══════════════ -->
+  <!--
+    NOTE TO ERIK: The firm line below names the LLC and its DBA, attributes the
+    CPA/EA/MBA credentials to individual staff/contractors (not to the firm as a
+    licensed entity), and states you are NOT a registered representative and hold
+    no securities licenses. Confirm with counsel whether Illinois requires
+    separate state-board firm registration or imposes "CPA firm" naming rules for
+    how you market accounting services, and have the full disclosures reviewed
+    before publishing. These disclosures are a conservative starting point, not
+    legal advice.
+  -->
+  <div class="disclosures">
+    <div class="disc-title">Important Disclosures</div>
+    <p><strong>Educational purpose only.</strong> This assessment is provided for general educational and informational purposes and does not constitute tax, legal, accounting, investment, or financial advice, nor a recommendation to buy, sell, or pursue any specific strategy.</p>
+    <p><strong>No advisory relationship.</strong> Completing this assessment, receiving your results, or scheduling a consultation does not create a client, advisory, fiduciary, or engagement relationship with Golden Tree Wealth Partners, LLC. Such a relationship is established only through a signed, written agreement.</p>
+    <p><strong>Self-reported, directional results.</strong> All scores are generated solely from the answers you provide. They are directional indicators, are not based on a review of your actual tax returns, financial statements, or records, and should not be relied upon as an assessment of your specific situation.</p>
+    <p><strong>No guarantee of outcomes.</strong> No specific tax savings, refunds, results, or outcomes are promised or guaranteed. Any strategies referenced are illustrative, may not be suitable or available to you, depend on eligibility and current law, and can change over time. Individual results vary based on your facts and circumstances.</p>
+    <p><strong>Savings illustrations.</strong> Any dollar ranges shown are illustrative and hypothetical examples of what a strategy can produce in general scenarios. They are not a quote, estimate, projection, or guarantee of your results; they are not based on your actual figures; and they are not additive across strategies. Eligibility for, and the benefit of, any strategy depends on your specific facts and on current tax law, which can change.</p>
+    <p><strong>Strategy availability.</strong> Certain strategies referenced (including entity structuring, the Augusta Rule, Section 125 plans, and dual-entity structures) generally require business ownership and may not be available to W-2 employees or others without a qualifying business.</p>
+    <p><strong>Seek qualified guidance.</strong> Before acting on any concept referenced here, consult a qualified tax, legal, or financial professional regarding your specific situation.</p>
+    <p><strong>Information &amp; privacy.</strong> Information you submit is transmitted to Golden Tree Wealth Partners, LLC and, to deliver your results by email, to our third-party email provider (EmailJS). We do not sell your information. See our <a href="#">Privacy Policy</a> for details on how your information is used and stored.</p>
+    <p class="disc-firm">Golden Tree Wealth Partners, LLC, doing business as Golden Tree Tax &amp; Accounting, is a tax and accounting services firm located in Illinois. Its team includes employees and contractors who hold Certified Public Accountant (CPA), Enrolled Agent (EA), and Master of Business Administration (MBA) designations. The firm is not a broker-dealer or securities firm, is not a registered representative, holds no securities licenses or registrations, and does not provide securities, brokerage, or investment-advisory services. Nothing in this assessment is investment advice or an offer or solicitation to buy or sell any security or investment product.</p>
+  </div>
+
+  <div class="footer">
+    © 2026 Golden Tree Wealth Partners, LLC &nbsp;·&nbsp; dba Golden Tree Tax &amp; Accounting &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+const state = {
+  step: 1,
+  identity: null,
+  cpaContact: null,     // tax_time | few_times | year_round
+  proactive: null,      // never | once_twice | multiple
+  filingFeel: null,     // recording | mixed | reducing
+  strategies: new Set(),// which strategies CPA has discussed
+  revenue: null,        // lt250 | 250_750 | 750_2m | 2m_plus
+  complexity: new Set(),
+  overpayConfidence: 4, // slider 0-10
+  taxStress: 5,         // slider 0-10
+  selfDx: null,         // handled | maybe_overpay | leaving_money | outgrown
+  inaction: null,
+  firstName: '',
+  lastName: '',
+  email: '',
+  biz: '',
+  preparer: ''
+};
+
+const STEP_LABELS = ['Identity','Your Tax Relationship','Your Picture','Self-Assessment','Your Snapshot'];
+
+// ── SINGLE-SELECT GROUPS ──
+function initSingleSelect(containerId, stateKey, onSelect) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state[stateKey] = btn.dataset.value;
+      if (onSelect) onSelect();
+    });
+  });
+}
+
+function initMultiSelect(containerId, stateSet, onSelect) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.value;
+      if (stateSet.has(key)) {
+        stateSet.delete(key);
+        btn.classList.remove('selected');
+      } else {
+        stateSet.add(key);
+        btn.classList.add('selected');
+      }
+      if (onSelect) onSelect();
+    });
+  });
+}
+
+// ── NAVIGATION ──
+function updateProgress() {
+  const total = 5;
+  const pct = Math.round((state.step / total) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Step ${state.step} of ${total} — ${STEP_LABELS[state.step-1]}`;
+  for (let i = 1; i <= total; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    if (!dot) continue;
+    dot.classList.remove('active','done');
+    if (i < state.step) dot.classList.add('done');
+    else if (i === state.step) dot.classList.add('active');
+  }
+}
+
+function goToStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById(`step-${n}`);
+  if (target) { target.classList.add('active'); }
+  document.getElementById('step-results').style.display = 'none';
+  state.step = n;
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showResults() {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const r = document.getElementById('step-results');
+  r.style.display = 'block';
+  r.classList.add('active');
+
+  document.getElementById('progress-bar').style.width = '100%';
+  document.getElementById('progress-label').textContent = 'Your Tax Strategy Snapshot™';
+  for(let i=1;i<=5;i++){
+    const d = document.getElementById(`dot-${i}`);
+    d.classList.remove('active');
+    d.classList.add('done');
+  }
+
+  renderResults();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── SCORING METHODOLOGY ──────────────────────────────────────────────
+// Every score is a WEIGHTED AVERAGE of named factors. Each factor is first
+// mapped to a 0–100 sub-score, then blended by the documented weights below.
+// Weights for each score sum to 1.00, so every result is already on a 0–100
+// scale (no arbitrary clamping of the final number is required).
+//
+//   Tax Planning Gap       higher = WORSE  (more distance from proactive planning)
+//   Proactive Advisory     higher = BETTER (how planning-oriented the preparer is)
+//   Structural Efficiency  higher = BETTER (how well structure fits complexity)
+//   Opportunity Index      higher = MORE upside potentially available
+//
+// IMPORTANT: scores are directional indicators built from self-reported
+// answers only. They are NOT based on a review of actual returns or records.
+// If the methodology copy in the results panel changes, keep these weights
+// in sync with it.
+// ─────────────────────────────────────────────────────────────────────
+
+function clamp100(x){ return Math.max(0, Math.min(100, x)); }
+// Safe lookup: returns table[key], or `def` if the key is absent/unanswered.
+function pick(table, key, def){ return Object.prototype.hasOwnProperty.call(table, key) ? table[key] : def; }
+
+// ── STRATEGY CATALOG, ELIGIBILITY & ILLUSTRATIVE RANGES ───────────────
+// `eligible(f)` decides whether a strategy is realistically available given the
+// person's profile. Several strategies require a business — a pure W-2 earner
+// with no business and no real estate cannot use them, so they are neither
+// recommended nor counted against that person's "coverage" score.
+//
+// The `range` values are ILLUSTRATIVE, HYPOTHETICAL annual figures by income
+// band. They are NOT quotes, estimates, or guarantees. ERIK: review and replace
+// these with your own conservative, defensible numbers and have them reviewed by
+// counsel before publishing. See the "Savings illustrations" disclosure.
+function profileFlags() {
+  const id = state.identity;
+  const c  = state.complexity;
+  const hasBusiness   = ['business_owner','self_employed','multi_income'].includes(id) || c.has('business') || c.has('multi_llc');
+  const hasRealEstate = id === 'real_estate' || c.has('commercial_re') || c.has('rental_re');
+  return { hasBusiness, hasRealEstate };
+}
+
+const STRATEGY_CATALOG = [
+  { id:'entity', label:'Entity & Compensation Structure', eligible:f=>f.hasBusiness,
+    body:'How your business is taxed — and how you split salary vs. distributions — is often the single largest lever, and one a compliance-only preparer rarely revisits.',
+    range:{lt250:[2000,8000],'250_750':[5000,20000],'750_2m':[10000,40000],'2m_plus':[15000,60000]} },
+  { id:'retirement', label:'Advanced Retirement Plans', eligible:f=>true,
+    body:'A solo 401(k), SEP, cash-balance, or defined-benefit plan — or, for W-2 earners, mega-backdoor and after-tax strategies — can shelter far more than a standard 401(k), but must be designed deliberately.',
+    range:{lt250:[1500,9000],'250_750':[4000,22000],'750_2m':[8000,40000],'2m_plus':[12000,70000]} },
+  { id:'income_timing', label:'Income Timing & Deferral', eligible:f=>true,
+    body:'Shifting when income and deductions land across tax years — including bonus, RSU, and capital-gains timing — can meaningfully lower an effective rate with advance planning.',
+    range:{lt250:[1000,6000],'250_750':[2500,15000],'750_2m':[5000,30000],'2m_plus':[8000,50000]} },
+  { id:'depreciation', label:'Real Estate Depreciation', eligible:f=>f.hasRealEstate,
+    body:'Cost segregation and accelerated depreciation are routinely left on the table when real estate is handled by a generalist preparer.',
+    range:{lt250:[3000,20000],'250_750':[6000,35000],'750_2m':[12000,70000],'2m_plus':[20000,120000]} },
+  { id:'qbi', label:'QBI / Pass-Through Optimization', eligible:f=>f.hasBusiness,
+    body:'The 20% pass-through deduction is frequently under-claimed because it depends on structure and compensation choices made earlier in the year.',
+    range:{lt250:[1500,8000],'250_750':[3000,18000],'750_2m':[6000,30000],'2m_plus':[8000,40000]} },
+  { id:'augusta', label:'Augusta Rule (Section 280A)', eligible:f=>f.hasBusiness,
+    body:'A business owner can rent their personal residence to their business for up to 14 days a year: the business deducts the rent and the income is tax-free to you, when documented correctly.',
+    range:{lt250:[1500,5000],'250_750':[2000,7000],'750_2m':[2500,9000],'2m_plus':[3000,10000]} },
+  { id:'section_125', label:'Section 125 Cafeteria Plan', eligible:f=>f.hasBusiness,
+    body:'A Section 125 plan lets a business offer benefits (health, dependent care, and more) on a pre-tax basis, lowering payroll and income tax for the company and its team.',
+    range:{lt250:[1000,5000],'250_750':[2000,9000],'750_2m':[3000,14000],'2m_plus':[4000,20000]} },
+  { id:'dual_entity', label:'Dual-Entity Structure', eligible:f=>f.hasBusiness,
+    body:'Pairing an operating company with a management or holding entity can separate liability, shift income, and unlock deductions — an advanced structure suited to established businesses.',
+    range:{lt250:[3000,12000],'250_750':[6000,25000],'750_2m':[12000,50000],'2m_plus':[20000,80000]} },
+  { id:'family', label:'Family Employment Strategies', eligible:f=>f.hasBusiness,
+    body:'Legitimately employing family members can shift income into lower brackets and fund opportunities — a classic strategy most preparers never raise.',
+    range:{lt250:[1000,4000],'250_750':[2000,7000],'750_2m':[3000,10000],'2m_plus':[4000,12000]} },
+  { id:'investments', label:'Tax-Advantaged Investments', eligible:f=>true,
+    body:'Opportunity Zones, qualified-dividend positioning, municipal allocation, and loss-harvesting can reduce the tax drag on an investment portfolio.',
+    range:{lt250:[1000,6000],'250_750':[2000,15000],'750_2m':[4000,30000],'2m_plus':[6000,50000]} },
+  { id:'charitable', label:'Charitable & DAF Strategies', eligible:f=>true,
+    body:'Bunching, donor-advised funds, appreciated-asset gifting, and QCDs can convert giving you already do into larger deductions.',
+    range:{lt250:[1000,6000],'250_750':[2000,12000],'750_2m':[4000,25000],'2m_plus':[6000,40000]} }
+];
+
+// Strategies available to this profile (used as the denominator for "coverage").
+function eligibleStrategyIds() {
+  const f = profileFlags();
+  return STRATEGY_CATALOG.filter(s => s.eligible(f)).map(s => s.id);
+}
+function fmtMoney(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+function fmtRange(r){ return r ? (fmtMoney(r[0]) + '\u2013' + fmtMoney(r[1])) : ''; }
+// ─────────────────────────────────────────────────────────────────────
+
+function computeScores() {
+  const stratCount = state.strategies.size;
+  const cmpxCount  = state.complexity.size;         // 0–8
+  const conf       = state.overpayConfidence;       // 0–10
+  const flags      = profileFlags();
+  const hasRE      = flags.hasRealEstate;
+
+  // Coverage is measured only against the strategies AVAILABLE to this person,
+  // so a W-2 earner is not penalized for business-only strategies they can't use.
+  const eligIds        = eligibleStrategyIds();                         // always ≥ 4 (universal strategies)
+  const eligSelected   = eligIds.filter(id => state.strategies.has(id)).length;
+  const coverageFrac   = eligIds.length ? eligSelected / eligIds.length : 0; // 0–1
+
+  // ── TAX PLANNING GAP — weights: 0.22 / 0.22 / 0.20 / 0.18 / 0.10 / 0.08 ──
+  const g_cadence   = pick({tax_time:100, few_times:55, year_round:10}, state.cpaContact, 60);
+  const g_proactive = pick({never:100, once_twice:50, multiple:10},     state.proactive,  60);
+  const g_coverage  = 100 * (1 - coverageFrac);                         // fewer relevant strategies surfaced → bigger gap
+  const g_filing    = pick({recording:100, mixed:50, reducing:10},      state.filingFeel, 55);
+  const g_confidence= (10 - conf) / 10 * 100;                           // lower confidence → bigger gap
+  const g_selfdx    = pick({leaving_money:100, maybe_overpay:75, outgrown:60, handled:10}, state.selfDx, 60);
+
+  const gap = clamp100(
+      0.22 * g_cadence +
+      0.22 * g_proactive +
+      0.20 * g_coverage +
+      0.18 * g_filing +
+      0.10 * g_confidence +
+      0.08 * g_selfdx
+  );
+
+  // ── PROACTIVE ADVISORY — weights: 0.30 / 0.30 / 0.20 / 0.20 ──
+  const a_cadence   = pick({year_round:100, few_times:55, tax_time:10}, state.cpaContact, 40);
+  const a_proactive = pick({multiple:100, once_twice:50, never:5},      state.proactive,  40);
+  const a_filing    = pick({reducing:100, mixed:50, recording:10},      state.filingFeel, 45);
+  const a_coverage  = 100 * coverageFrac;
+
+  const proactive = clamp100(
+      0.30 * a_cadence +
+      0.30 * a_proactive +
+      0.20 * a_filing +
+      0.20 * a_coverage
+  );
+
+  // ── STRUCTURAL EFFICIENCY — weights: 0.30 / 0.25 / 0.15 / 0.15 / 0.15 ──
+  const s_coord   = pick({year_round:90, few_times:55, tax_time:25}, state.cpaContact, 45);
+  const s_entity  = !flags.hasBusiness ? 65 : (state.strategies.has('entity') ? 100 : 35);
+  const s_re      = !hasRE ? 65 : (state.strategies.has('depreciation') ? 100 : 20);
+  const s_load    = clamp100(100 - Math.min(cmpxCount, 6) * 12);        // more moving parts → harder to keep efficient
+  const s_selfdx  = pick({handled:90, maybe_overpay:50, outgrown:40, leaving_money:30}, state.selfDx, 50);
+
+  const structural = clamp100(
+      0.30 * s_coord +
+      0.25 * s_entity +
+      0.15 * s_re +
+      0.15 * s_load +
+      0.15 * s_selfdx
+  );
+
+  // ── OPPORTUNITY INDEX — weights: 0.45 / 0.40 / 0.15 (uses gap as an input) ──
+  const o_stakes   = pick({lt250:30, '250_750':55, '750_2m':78, '2m_plus':95}, state.revenue, 50);
+  const o_gap      = gap;                                               // bigger gap → more to recover
+  const o_leverage = 30 + (Math.min(cmpxCount, 6) / 6) * 70;            // more structure → more levers
+
+  const opportunity = clamp100(
+      0.45 * o_stakes +
+      0.40 * o_gap +
+      0.15 * o_leverage
+  );
+
+  return {
+    gap:         Math.round(gap),
+    proactive:   Math.round(proactive),
+    structural:  Math.round(structural),
+    opportunity: Math.round(opportunity)
+  };
+}
+
+// ── BAND THRESHOLDS (keep in sync with the methodology panel) ──
+// Gap scale: higher = worse
+function gapLabel(v) {
+  if (v >= 60) return 'Significant Gap';
+  if (v >= 35) return 'Moderate Gap';
+  return 'Minimal Gap';
+}
+// Higher-is-better quality scale (Proactive Advisory, Structural Efficiency)
+function qualityLabel(v) {
+  if (v >= 70) return 'Strong';
+  if (v >= 45) return 'Moderate';
+  return 'Needs Attention';
+}
+// Opportunity scale: higher = more upside (framed positively)
+function opportunityLabel(v) {
+  if (v >= 65) return 'High Upside';
+  if (v >= 45) return 'Moderate Upside';
+  return 'Limited Upside';
+}
+function badgeClass(label) {
+  if (label === 'Strong' || label === 'Minimal Gap' || label === 'Limited Upside') return 'badge-strong';
+  if (label === 'Moderate' || label === 'Moderate Gap' || label === 'Moderate Upside' || label === 'High Upside') return 'badge-moderate';
+  return 'badge-high'; // Needs Attention, Significant Gap
+}
+function qualityBarClass(v) {
+  if (v >= 70) return 'green';
+  if (v >= 45) return 'gold';
+  return 'amber';
+}
+function gapBarClass(v) {
+  if (v >= 60) return 'red';
+  if (v >= 35) return 'amber';
+  return 'green';
+}
+function opportunityBarClass(v) {
+  return v >= 45 ? 'gold' : 'green';
+}
+
+function buildOpportunities(scores) {
+  const f = profileFlags();
+  const recs = [];
+
+  // Meta recommendation — applies whenever the relationship is reactive.
+  if (state.cpaContact === 'tax_time' || state.proactive === 'never') {
+    recs.push({ title: 'Proactive, Year-Round Planning', range: null,
+      body: 'The single biggest driver of overpayment is timing — strategies must be set before the year closes, not discovered in April.' });
+  }
+
+  // Recommend only ELIGIBLE strategies the person hasn't already had surfaced,
+  // in rough order of typical impact.
+  const priority = ['entity','dual_entity','depreciation','retirement','qbi','augusta','income_timing','section_125','family','investments','charitable'];
+  const ordered = STRATEGY_CATALOG.slice().sort((a,b) => priority.indexOf(a.id) - priority.indexOf(b.id));
+  for (const s of ordered) {
+    if (!s.eligible(f)) continue;                 // W-2 / no-business profiles skip business-only strategies
+    if (state.strategies.has(s.id)) continue;     // already being addressed
+    recs.push({ title: s.label, body: s.body, range: (s.range && s.range[state.revenue]) || null });
+  }
+
+  // Exit/liquidity note (a timing concern rather than a single strategy).
+  if (f.hasBusiness && (state.inaction === 'exit_value' || state.complexity.has('liquidity') || state.complexity.has('multi_llc'))) {
+    recs.push({ title: 'Exit & Liquidity Tax Planning', range: null,
+      body: 'A future sale or liquidity event can be one of the most heavily taxed moments of your life — and one of the most plannable, if the runway exists.' });
+  }
+
+  if (recs.length === 0) {
+    recs.push({ title: 'Comprehensive Tax Strategy Review', range: null,
+      body: 'Even well-managed returns usually contain optimization a second, planning-focused set of eyes can surface.' });
+  }
+  return recs.slice(0, 5);
+}
+
+function buildInsights(scores) {
+  const items = [];
+
+  if (state.overpayConfidence <= 4) {
+    items.push({ icon: '🔍', text: '<strong>Low confidence you\'re paying the legal minimum</strong> is the clearest signal that planning — not just filing — is missing from the relationship.' });
+  } else if (state.overpayConfidence >= 8) {
+    items.push({ icon: '✅', text: '<strong>High confidence is a good sign</strong> — but the most expensive blind spots tend to live inside confident returns. A second look can confirm what\'s working.' });
+  }
+
+  if (state.taxStress >= 7) {
+    items.push({ icon: '⚡', text: '<strong>A stressful tax season</strong> usually means you\'re reacting to your taxes instead of directing them. Planning replaces the scramble with a calendar.' });
+  }
+
+  if (state.cpaContact === 'tax_time') {
+    items.push({ icon: '📅', text: '<strong>Only hearing from your preparer at tax time</strong> means the planning window has already closed by the time you talk. The savings live in the months before.' });
+  }
+
+  if (state.proactive === 'never') {
+    items.push({ icon: '📥', text: '<strong>A preparer who only works with what you hand them</strong> can\'t surface the strategies you don\'t yet know to ask for. That\'s the difference between compliance and planning.' });
+  }
+
+  if ((state.revenue === '750_2m' || state.revenue === '2m_plus') && scores.gap >= 55) {
+    items.push({ icon: '💰', text: '<strong>At your income level, even a modest planning gap</strong> compounds into real dollars — every single year it goes unaddressed.' });
+  }
+
+  return items.slice(0, 3);
+}
+
+// ── RENDER RESULTS ──
+function renderResults() {
+  const scores = computeScores();
+
+  document.getElementById('result-name').textContent = state.firstName ? `${state.firstName}.` : 'and what it means.';
+
+  // Tax Planning Gap (higher = worse)
+  document.getElementById('r-gap').textContent = scores.gap;
+  setTimeout(() => {
+    const bar = document.getElementById('r-gap-bar');
+    bar.className = 'score-bar-fill ' + gapBarClass(scores.gap);
+    bar.style.width = scores.gap + '%';
+  }, 100);
+  const gLabel = gapLabel(scores.gap);
+  const gBadge = document.getElementById('r-gap-badge');
+  gBadge.textContent = gLabel;
+  gBadge.className = 'score-badge ' + badgeClass(gLabel);
+
+  // Proactive Advisory (higher = better)
+  paintQuality('r-proactive', 'r-proactive-bar', 'r-proactive-badge', scores.proactive, 200);
+
+  // Structural Efficiency (higher = better)
+  paintQuality('r-structural', 'r-structural-bar', 'r-structural-badge', scores.structural, 300);
+
+  // Opportunity Index (higher = more upside)
+  document.getElementById('r-opportunity').textContent = scores.opportunity;
+  setTimeout(() => {
+    const bar = document.getElementById('r-opportunity-bar');
+    bar.className = 'score-bar-fill ' + opportunityBarClass(scores.opportunity);
+    bar.style.width = scores.opportunity + '%';
+  }, 400);
+  const oLabel = opportunityLabel(scores.opportunity);
+  const oBadge = document.getElementById('r-opportunity-badge');
+  oBadge.textContent = oLabel;
+  oBadge.className = 'score-badge ' + badgeClass(oLabel);
+
+  // Opportunities
+  const opps = buildOpportunities(scores);
+  document.getElementById('opportunity-list').innerHTML = opps.map(o => `
+    <div class="opp-item">
+      <div class="opp-dot"></div>
+      <div class="opp-text"><strong>${o.title}:</strong> ${o.body}${o.range ? ` <span class="opp-range">Illustrative potential: ${fmtRange(o.range)}/yr*</span>` : ''}</div>
+    </div>
+  `).join('');
+
+  // Insights
+  const insights = buildInsights(scores);
+  document.getElementById('insights-list').innerHTML = insights.map(i => `
+    <div class="insight-strip">
+      <div class="insight-icon">${i.icon}</div>
+      <div class="insight-body">${i.text}</div>
+    </div>
+  `).join('');
+
+  // Send email snapshot
+  sendSnapshot(scores);
+}
+
+function paintQuality(numId, barId, badgeId, value, delay) {
+  document.getElementById(numId).textContent = value;
+  setTimeout(() => {
+    const bar = document.getElementById(barId);
+    bar.className = 'score-bar-fill ' + qualityBarClass(value);
+    bar.style.width = value + '%';
+  }, delay);
+  const label = qualityLabel(value);
+  const badge = document.getElementById(badgeId);
+  badge.textContent = label;
+  badge.className = 'score-badge ' + badgeClass(label);
+}
+
+// ── EMAILJS CONFIG ──
+// Credentials preserved from your V2.0 file. NOTE: this version sends a NEW set of
+// template variables (listed below). Update your EmailJS template to use these, or
+// the email body will show blanks for the renamed fields.
+const EMAILJS_PUBLIC_KEY  = 'ZkOy2EZeuha_rJr-X';
+const EMAILJS_SERVICE_ID  = 'service_afq0xis';
+const EMAILJS_TEMPLATE_ID = 'template_hs86sd6';
+// Template variables now sent: {{to_email}}, {{first_name}}, {{last_name}},
+// {{business_name}}, {{current_preparer}}, {{identity}}, {{cpa_contact}},
+// {{proactive_strategy}}, {{filing_feel}}, {{strategies_discussed}}, {{income}},
+// {{complexity}}, {{overpay_confidence}}, {{tax_stress}}, {{self_diagnosis}},
+// {{cost_of_inaction}}, {{tax_gap_score}}, {{proactive_score}}, {{structural_score}},
+// {{opportunity_score}}, {{opportunities}}, {{calendly_link}}
+
+const CALENDLY_URL = 'https://calendly.com/goldentreewealthpartners/30min';
+
+// ── LABEL MAPS (for the email summary) ──
+const IDENTITY_LABELS = {
+  business_owner:'Business Owner', professional:'High-Income Professional / Executive',
+  real_estate:'Real Estate Investor', self_employed:'Self-Employed / 1099',
+  multi_income:'Multiple Income Sources', equity_comp:'Equity / Stock Compensation'
+};
+const CONTACT_LABELS = {
+  tax_time:'Only at tax time', few_times:'A few touchpoints a year', year_round:'Year-round proactive planning'
+};
+const PROACTIVE_LABELS = {
+  never:'Never — prepares what is handed to them', once_twice:'Once or twice', multiple:'Yes, regularly'
+};
+const FILING_LABELS = {
+  recording:'Recording what already happened', mixed:'A mix of both', reducing:'Actively reducing what is owed'
+};
+const STRATEGY_LABELS = {
+  entity:'Entity structure / S-corp salary', retirement:'Advanced retirement plans',
+  income_timing:'Income timing / deferral', depreciation:'Real estate depreciation / cost seg',
+  family:'Employing family', qbi:'QBI / pass-through deduction',
+  augusta:'Augusta Rule (Section 280A)', section_125:'Section 125 cafeteria plan',
+  dual_entity:'Dual-entity structure',
+  investments:'Tax-advantaged investments', charitable:'Charitable / DAF strategies'
+};
+const INCOME_LABELS = { lt250:'Under $250k','250_750':'$250k–$750k','750_2m':'$750k–$2M','2m_plus':'$2M+' };
+const COMPLEXITY_LABELS = {
+  business:'Owns a business', multi_llc:'Multiple LLCs/entities',
+  commercial_re:'Commercial real estate', rental_re:'Rental properties',
+  trusts:'Trusts / estate plan', investors:'Outside investors/partners',
+  portfolio:'Sizable investment portfolio', liquidity:'Equity comp / pending exit'
+};
+const SELFDX_LABELS = {
+  handled:'Taxes handled and optimized', maybe_overpay:'Might be overpaying, unsure',
+  leaving_money:'Fairly sure leaving money on the table', outgrown:'Has outgrown current preparer'
+};
+const INACTION_LABELS = {
+  overpay:'Overpaying year after year', missing_strategies:'Missing strategies as income grows',
+  exit_value:'No tax plan for a future sale/exit', april_scramble:'The annual April scramble',
+  family_mess:'Leaving a tax mess for family'
+};
+
+async function sendSnapshot(scores) {
+  const statusEl = document.getElementById('email-status');
+  const sendingEl = document.getElementById('email-sending');
+  const sentEl    = document.getElementById('email-sent');
+  const errorEl   = document.getElementById('email-error');
+  document.getElementById('email-dest').textContent = state.email;
+  statusEl.style.display = 'block';
+  sendingEl.style.display = 'block';
+  sentEl.style.display = 'none';
+  errorEl.style.display = 'none';
+
+  const opps = buildOpportunities(scores).map(o => `• ${o.title}: ${o.body}${o.range ? ` (Illustrative potential: ${fmtRange(o.range)}/yr — hypothetical, not a quote or guarantee)` : ''}`).join('\n\n');
+
+  const templateParams = {
+    to_email:           state.email,
+    first_name:         state.firstName,
+    last_name:          state.lastName,
+    business_name:      state.biz || 'Not provided',
+    current_preparer:   state.preparer || 'Not provided',
+    identity:           IDENTITY_LABELS[state.identity] || state.identity,
+    cpa_contact:        CONTACT_LABELS[state.cpaContact] || 'Not provided',
+    proactive_strategy: PROACTIVE_LABELS[state.proactive] || 'Not provided',
+    filing_feel:        FILING_LABELS[state.filingFeel] || 'Not provided',
+    strategies_discussed: [...state.strategies].map(k => STRATEGY_LABELS[k] || k).join(', ') || 'None selected',
+    income:             INCOME_LABELS[state.revenue] || 'Not provided',
+    complexity:         [...state.complexity].map(k => COMPLEXITY_LABELS[k] || k).join(', ') || 'None selected',
+    overpay_confidence: `${state.overpayConfidence}/10`,
+    tax_stress:         `${state.taxStress}/10`,
+    self_diagnosis:     SELFDX_LABELS[state.selfDx] || 'Not provided',
+    cost_of_inaction:   INACTION_LABELS[state.inaction] || 'Not provided',
+    tax_gap_score:      `${scores.gap}/100 — ${gapLabel(scores.gap)}`,
+    proactive_score:    `${scores.proactive}/100 — ${qualityLabel(scores.proactive)}`,
+    structural_score:   `${scores.structural}/100 — ${qualityLabel(scores.structural)}`,
+    opportunity_score:  `${scores.opportunity}/100 — ${opportunityLabel(scores.opportunity)}`,
+    opportunities:      opps,
+    calendly_link:      CALENDLY_URL
+  };
+
+  try {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+    sendingEl.style.display = 'none';
+    sentEl.style.display = 'block';
+  } catch (err) {
+    console.warn('EmailJS send failed:', err);
+    sendingEl.style.display = 'none';
+    errorEl.style.display = 'block';
+  }
+}
+
+// ── VALIDATION ──
+function checkStep2Valid() {
+  return state.cpaContact !== null && state.proactive !== null && state.filingFeel !== null;
+  // strategies multi-select is intentionally optional (none = a valid, telling answer)
+}
+function checkStep3Valid() {
+  return !!state.revenue; // complexity optional
+}
+function checkStep4Valid() {
+  return state.selfDx !== null && state.inaction !== null;
+}
+function checkStep5Valid() {
+  const f = document.getElementById('contact-first').value.trim();
+  const l = document.getElementById('contact-last').value.trim();
+  const e = document.getElementById('contact-email').value.trim();
+  return f && l && e && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+}
+
+// ── WIRE UP ──
+function init() {
+
+  // Step 1
+  initSingleSelect('identity-choices', 'identity', () => {
+    document.getElementById('next-1').disabled = !state.identity;
+  });
+  document.getElementById('next-1').addEventListener('click', () => { if(state.identity) goToStep(2); });
+
+  // Step 2
+  initSingleSelect('cpacontact-choices', 'cpaContact', () => { document.getElementById('next-2').disabled = !checkStep2Valid(); });
+  initSingleSelect('proactive-choices', 'proactive', () => { document.getElementById('next-2').disabled = !checkStep2Valid(); });
+  initSingleSelect('filing-choices', 'filingFeel', () => { document.getElementById('next-2').disabled = !checkStep2Valid(); });
+  initMultiSelect('strategies-choices', state.strategies, () => {});
+  document.getElementById('back-2').addEventListener('click', () => goToStep(1));
+  document.getElementById('next-2').addEventListener('click', () => { if(checkStep2Valid()) goToStep(3); });
+
+  // Step 3
+  initSingleSelect('income-choices', 'revenue', () => { document.getElementById('next-3').disabled = !checkStep3Valid(); });
+  initMultiSelect('complexity-choices', state.complexity, () => {});
+  document.getElementById('back-3').addEventListener('click', () => goToStep(2));
+  document.getElementById('next-3').addEventListener('click', () => { if(checkStep3Valid()) goToStep(4); });
+
+  // Step 4
+  const confSlider = document.getElementById('conf-slider');
+  const stressSlider = document.getElementById('stress-slider');
+  confSlider.addEventListener('input', () => {
+    state.overpayConfidence = parseInt(confSlider.value);
+    document.getElementById('conf-val').textContent = state.overpayConfidence;
+  });
+  stressSlider.addEventListener('input', () => {
+    state.taxStress = parseInt(stressSlider.value);
+    document.getElementById('stress-val').textContent = state.taxStress;
+  });
+  initSingleSelect('selfdx-choices', 'selfDx', () => { document.getElementById('next-4').disabled = !checkStep4Valid(); });
+  initSingleSelect('inaction-choices', 'inaction', () => { document.getElementById('next-4').disabled = !checkStep4Valid(); });
+  document.getElementById('back-4').addEventListener('click', () => goToStep(3));
+  document.getElementById('next-4').addEventListener('click', () => { if(checkStep4Valid()) goToStep(5); });
+
+  // Step 5
+  ['contact-first','contact-last','contact-email'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      document.getElementById('next-5').disabled = !checkStep5Valid();
+    });
+  });
+  document.getElementById('back-5').addEventListener('click', () => goToStep(4));
+  document.getElementById('next-5').addEventListener('click', () => {
+    if (!checkStep5Valid()) return;
+    state.firstName = document.getElementById('contact-first').value.trim();
+    state.lastName  = document.getElementById('contact-last').value.trim();
+    state.email     = document.getElementById('contact-email').value.trim();
+    state.biz       = document.getElementById('contact-biz').value.trim();
+    state.preparer  = document.getElementById('contact-preparer').value.trim();
+    showResults();
+  });
+
+  // Restart
+  document.getElementById('restart-btn').addEventListener('click', () => {
+    state.step = 1;
+    state.identity = null;
+    state.cpaContact = null;
+    state.proactive = null;
+    state.filingFeel = null;
+    state.strategies.clear();
+    state.revenue = null;
+    state.complexity.clear();
+    state.overpayConfidence = 4; state.taxStress = 5;
+    state.selfDx = null; state.inaction = null;
+    state.firstName = ''; state.lastName = ''; state.email = ''; state.biz = ''; state.preparer = '';
+    document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('conf-slider').value = 4;
+    document.getElementById('stress-slider').value = 5;
+    document.getElementById('conf-val').textContent = '4';
+    document.getElementById('stress-val').textContent = '5';
+    ['contact-first','contact-last','contact-email','contact-biz','contact-preparer'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('next-1').disabled = true;
+    document.getElementById('next-2').disabled = true;
+    document.getElementById('next-3').disabled = true;
+    document.getElementById('next-4').disabled = true;
+    document.getElementById('next-5').disabled = true;
+    document.getElementById('step-results').style.display = 'none';
+    goToStep(1);
+  });
+
+  updateProgress();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init, { once: true });
+} else {
+  init();
+}
+</script>
+</body>
+</html>
